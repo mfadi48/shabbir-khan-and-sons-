@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shabbir Khan & Sons | Safe Hands, Heavy Loads, On Time</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #002e5d; --accent: #ffcc00; --whatsapp: #25D366; --call: #007bff; --light: #f4f7f6; }
+        body { font-family: 'Arial', sans-serif; margin: 0; color: #333; scroll-behavior: smooth; }
+        
+        header { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .logo { color: var(--primary); font-size: 22px; font-weight: 800; text-transform: uppercase; border-left: 5px solid var(--accent); padding-left: 15px; }
+        .slogan { font-size: 14px; color: #666; font-style: italic; }
+
+        .hero { background: linear-gradient(rgba(0,46,93,0.85), rgba(0,46,93,0.75)), url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center; height: 65vh; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 10%; }
+        .hero h1 { font-size: 3.2rem; margin: 0; }
+        .hero h2 { color: var(--accent); font-weight: 400; margin-top: 10px; }
+
+        .section { padding: 60px 10%; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border-top: 5px solid var(--primary); }
+        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; margin-bottom: 15px; background: #eee; }
+
+        /* Floating Buttons */
+        .float-btns { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 1000; }
+        .btn-circle { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); text-decoration: none; transition: 0.3s; }
+        .wa-btn { background-color: var(--whatsapp); }
+        .call-btn { background-color: var(--call); }
+
+        .booking-form { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: left; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; }
+        .submit-btn { background: var(--whatsapp); color: white; border: none; width: 100%; padding: 15px; font-weight: bold; cursor: pointer; border-radius: 5px; font-size: 1.1rem; }
+        
+        footer { background: #1a1a1a; color: white; padding: 40px 10%; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="float-btns">
+    <a href="tel:03298814020" class="btn-circle call-btn"><i class="fa-solid fa-phone"></i></a>
+    <a href="https://wa.me/923298814020?text=Hi%20Shabbir%20Khan%20and%20Sons,%20I%20need%20a%20transport%20quote." class="btn-circle wa-btn" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+</div>
+
+<header>
+    <div>
+        <div class="logo">SHABBIR KHAN <strong>& SONS</strong></div>
+        <div class="slogan">Safe Hands, Heavy Loads, On Time</div>
+    </div>
+    <div style="font-weight: bold; color: var(--primary); text-align: right;">
+        <i class="fa-solid fa-location-dot"></i> Sheikhupura<br>
+        <small>Serving All Pakistan</small>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>All Pakistan Industrial Transport</h1>
+    <h2>Premium City-to-City Logistics Solutions</h2>
+    <a href="#booking" style="background:var(--accent); color:black; padding:15px 40px; text-decoration:none; font-weight:bold; border-radius:5px; margin-top: 20px;">BOOK NOW</a>
+</section>
+
+<section class="section">
+    <h2>Our Speciality Vehicles</h2>
+    <p>Based in Sheikhupura, we provide the right vehicle for every industrial need.</p>
+    <div class="grid">
+        <div class="card">
+            <img src="container.jpg" alt="Container">
+            <h3>Containers (20/40 ft)</h3>
+            <p>Export/Import and domestic industrial cargo.</p>
+        </div>
+        <div class="card">
+            <img src="truck.jpg" alt="Heavy Truck">
+            <h3>Heavy Duty Trucks</h3>
+            <p>Best for iron, raw materials, and factory machinery.</p>
+        </div>
+        <div class="card">
+            <img src="shehzore.jpg" alt="Shehzore">
+            <h3>Shehzore & Pickups</h3>
+            <p>Commercial deliveries for fast-moving goods.</p>
+        </div>
+    </div>
+</section>
+
+<section id="booking" class="section" style="background: var(--light);">
+    <h2>Send Loading Inquiry</h2>
+    <div class="booking-form">
+        <label>Cargo Details</label>
+        <input type="text" id="cargo" placeholder="What are you moving?">
+        
+        <label>Destination</label>
+        <input type="text" id="destination" placeholder="Which city?">
+        
+        <label>Select Vehicle</label>
+        <select id="vehicle">
+            <option>Container</option>
+            <option>Heavy Truck</option>
+            <option>Shehzore</option>
+            <option>Pickup</option>
+        </select>
+        
+        <button class="submit-btn" onclick="sendToWhatsApp()">SEND ORDER VIA WHATSAPP</button>
+        <a href="tel:03298814020" style="display: block; text-align: center; color: var(--primary); margin-top: 15px; font-weight: bold; text-decoration: none;">CALL OFFICE: 0329 8814020</a>
+    </div>
+</section>
+
+<footer>
+    <p><strong>SHABBIR KHAN & SONS GOODS TRANSPORT</strong></p>
+    <p>Head Office: Sheikhupura, Punjab | 0329 8814020 | 0301 4650650</p>
+    <p>We deliver to Karachi, Lahore, Faisalabad, Multan, Quetta, and beyond.</p>
+    <div style="margin-top: 20px; font-size: 0.8rem; color: #777;">
+        &copy; 2026 Shabbir Khan & Sons. Established Quality.
+    </div>
+</footer>
+
+<script>
+    function sendToWhatsApp() {
+        let cargo = document.getElementById('cargo').value;
+        let dest = document.getElementById('destination').value;
+        let vhc = document.getElementById('vehicle').value;
+        
+        if(cargo == "" || dest == "") { alert("Please enter cargo and destination."); return; }
+
+        let message = "Transport Inquiry for Shabbir Khan %26 Sons:%0A" + 
+                      "-----------------------%0A" +
+                      "Cargo: " + cargo + "%0A" + 
+                      "Destination: " + dest + "%0A" + 
+                      "Vehicle: " + vhc;
+        
+        window.open("https://wa.me/923298814020?text=" + message, '_blank');
+    }
+</script>
+
+</body>
+</html>
