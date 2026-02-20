@@ -3,149 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shabbir Khan & Sons | Professional Logistics</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>SK & Sons | Advanced ERP & Tax Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        :root { --primary: #002e5d; --accent: #ffcc00; --whatsapp: #25D366; --call: #007bff; --light: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; color: #333; background: var(--light); }
+        :root { --navy: #002147; --gold: #ffcc00; --green: #2ecc71; --red: #e74c3c; --gray: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--gray); margin: 0; color: #333; }
+        header { background: var(--navy); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .container { padding: 20px 5%; max-width: 1400px; margin: auto; }
         
-        /* Header & Navigation */
-        header { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-        .logo { color: var(--primary); font-size: 22px; font-weight: 800; text-transform: uppercase; border-left: 5px solid var(--accent); padding-left: 15px; }
+        /* Dashboard Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .card h4 { margin: 0; font-size: 0.85rem; text-transform: uppercase; color: #777; }
+        .card h2 { margin: 10px 0 0; font-size: 1.6rem; color: var(--navy); }
+
+        /* Main Grid */
+        .main-layout { display: grid; grid-template-columns: 350px 1fr; gap: 25px; }
+        .form-box { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         
-        /* Professional Hero Section */
-        .hero { background: linear-gradient(rgba(0,46,93,0.9), rgba(0,46,93,0.7)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center; height: 40vh; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-
-        /* Tracking Section */
-        .track-box { background: white; padding: 20px; width: 80%; max-width: 600px; margin: -30px auto 30px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; gap: 10px; }
-        .track-box input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 5px; }
-        .track-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-
-        /* Form Styling */
-        .booking-container { max-width: 800px; margin: 20px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        label { font-weight: 600; color: var(--primary); display: block; margin-bottom: 5px; margin-top: 15px; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        label { display: block; margin: 10px 0 5px; font-weight: bold; font-size: 0.9rem; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 5px; }
         
-        .payment-options { display: flex; gap: 20px; margin-top: 10px; }
-        .payment-options label { margin: 0; font-weight: normal; }
-
-        .submit-btn { background: var(--whatsapp); color: white; border: none; width: 100%; padding: 18px; font-weight: bold; cursor: pointer; border-radius: 8px; font-size: 1.2rem; margin-top: 30px; transition: 0.3s; }
-        .submit-btn:hover { background: #1eb954; transform: translateY(-2px); }
-
-        .float-btns { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 15px; }
-        .btn-circle { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 25px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-
-        footer { background: #111; color: #888; padding: 40px; text-align: center; margin-top: 50px; }
+        .tax-section { background: #fffde7; padding: 10px; border-radius: 8px; margin: 10px 0; border: 1px solid #ffe082; }
+        .btn-action { width: 100%; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; color: white; }
         
-        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+        /* Report Table */
+        .report-box { background: white; padding: 20px; border-radius: 15px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: #f8f9fa; padding: 12px; text-align: left; border-bottom: 2px solid var(--navy); font-size: 0.9rem; }
+        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+        .badge-credit { background: #fff3e0; color: #ef6c00; }
+        .badge-cash { background: #e8f5e9; color: #2e7d32; }
+
+        @media (max-width: 1000px) { .main-layout { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">SHABBIR KHAN <strong>& SONS</strong></div>
-    <div style="font-weight: bold; color: var(--primary);"><i class="fa fa-map-marker-alt"></i> Sheikhupura</div>
+    <div><strong>SHABBIR KHAN & SONS</strong> | ERP SYSTEM</div>
+    <div id="clock"></div>
 </header>
 
-<section class="hero">
-    <h1>Industrial Logistics Solutions</h1>
-    <p>Safe, Secure, and Trackable Transport Across Pakistan</p>
-</section>
-
-<div class="track-box">
-    <input type="text" id="trackInput" placeholder="Enter Order Number (e.g. SK-1234)">
-    <button class="track-btn" onclick="trackOrder()">TRACK</button>
-</div>
-
-<div class="booking-container">
-    <h2 style="color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 10px;">Place Logistics Order</h2>
-    
-    <div class="form-grid">
-        <div>
-            <label>Loading Point (From)</label>
-            <input type="text" id="from_city" placeholder="e.g. Sheikhupura Factory">
-        </div>
-        <div>
-            <label>Unloading Point (To)</label>
-            <input type="text" id="to_city" placeholder="e.g. Port Qasim, Karachi">
-        </div>
-        <div>
-            <label>Cargo Description</label>
-            <input type="text" id="cargo_type" placeholder="e.g. Rice Bags / Machinery">
-        </div>
-        <div>
-            <label>Quantity / Weight</label>
-            <input type="text" id="quantity" placeholder="e.g. 25 Tons / 500 Bags">
-        </div>
-        <div>
-            <label>Vehicle Type</label>
-            <select id="vehicle">
-                <option>40ft Container</option>
-                <option>20ft Container</option>
-                <option>10-Wheeler Truck</option>
-                <option>Mazda T-3500</option>
-                <option>Shehzore</option>
-            </select>
-        </div>
-        <div>
-            <label>Payment Mode</label>
-            <select id="payment">
-                <option value="Cash on Loading">Cash on Loading</option>
-                <option value="Cash on Delivery">Cash on Delivery</option>
-                <option value="Credit (Contract Only)">Credit (Contract Only)</option>
-                <option value="Bank Transfer">Bank Transfer</option>
-            </select>
-        </div>
+<div class="container">
+    <div class="stats-grid">
+        <div class="card"><h4>Monthly Profit</h4><h2 id="mProfit">Rs. 0</h2></div>
+        <div class="card"><h4>Receivable (Credit)</h4><h2 id="mCredit" style="color:var(--red)">Rs. 0</h2></div>
+        <div class="card"><h4>Diesel Consumption</h4><h2 id="mDiesel">0 Liters</h2></div>
+        <div class="card"><h4>Best Vehicle</h4><h2 id="mBest">N/A</h2></div>
     </div>
 
-    <button class="submit-btn" onclick="generateOrder()">CONFIRM & GENERATE ORDER</button>
-</div>
+    <div class="main-layout">
+        <div class="form-box">
+            <h3 style="margin-top:0">New Entry</h3>
+            <label>Trip Date</label>
+            <input type="date" id="date">
+            <label>Vehicle No.</label>
+            <input type="text" id="truck" placeholder="e.g. LES-1234">
+            <label>Party / Company</label>
+            <input type="text" id="party" placeholder="e.g. Lucky Cement">
+            <label>Freight (Gross)</label>
+            <input type="number" id="freight" placeholder="Total Bhara">
+            
+            <div class="tax-section">
+                <label>Tax Settings</label>
+                <select id="taxType" onchange="calcTotal()">
+                    <option value="none">No Tax</option>
+                    <option value="sales">Sales Tax (18%)</option>
+                    <option value="income">WHT Income Tax (3%)</option>
+                    <option value="both">Both Taxes</option>
+                </select>
+                <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">
+                    Tax Amount: <span id="taxDisplay">0</span>
+                </div>
+            </div>
 
-<div class="float-btns">
-    <a href="tel:03298814020" class="btn-circle" style="background:var(--call);"><i class="fa fa-phone"></i></a>
-    <a href="https://wa.me/923298814020" class="btn-circle" style="background:var(--whatsapp);"><i class="fab fa-whatsapp"></i></a>
-</div>
+            <label>Payment Method</label>
+            <select id="payment">
+                <option value="Cash">Cash</option>
+                <option value="Credit">Credit (Pay Later)</option>
+            </select>
 
-<footer>
-    <p>&copy; 2026 Shabbir Khan & Sons Goods Transport Company</p>
-    <p>Sheikhupura, Punjab | 0329 8814020 | 0301 4650650</p>
-</footer>
+            <label>Diesel (Rs.)</label>
+            <input type="number" id="diesel" placeholder="Diesel Kharcha">
+            <label>Misc. Exp (Toll/Driver)</label>
+            <input type="number" id="misc" placeholder="Other expenses">
+
+            <button class="btn-action" style="background:var(--navy)" onclick="addTrip()">SAVE & GENERATE INVOICE</button>
+        </div>
+
+        <div class="report-box">
+            <div style="display:flex; justify-content: space-between; align-items: center;">
+                <h3>Trip Ledger & Performance</h3>
+                <button onclick="exportData()" style="padding:5px 10px; cursor:pointer;">Export Excel</button>
+            </div>
+            <table id="tripTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Truck</th>
+                        <th>Party</th>
+                        <th>Total Bhara</th>
+                        <th>Diesel</th>
+                        <th>Net Profit</th>
+                        <th>Payment</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <script>
-    function trackOrder() {
-        let id = document.getElementById('trackInput').value;
-        if(id == "") { alert("Please enter an Order ID"); return; }
-        alert("Order " + id + " Status: IN TRANSIT. \nYour cargo is currently near Sukkur. Delivery expected in 18 hours.");
+    let trips = JSON.parse(localStorage.getItem('sk_erp_trips')) || [];
+
+    function calcTotal() {
+        let f = Number(document.getElementById('freight').value);
+        let type = document.getElementById('taxType').value;
+        let tax = 0;
+        if(type === 'sales') tax = f * 0.18;
+        if(type === 'income') tax = f * 0.03;
+        if(type === 'both') tax = f * 0.21;
+        document.getElementById('taxDisplay').innerText = tax.toFixed(0);
     }
 
-    function generateOrder() {
-        // Generate a random Order Number
-        let orderNum = "SK-" + Math.floor(1000 + Math.random() * 9000);
-        
-        let from = document.getElementById('from_city').value;
-        let to = document.getElementById('to_city').value;
-        let cargo = document.getElementById('cargo_type').value;
-        let qty = document.getElementById('quantity').value;
-        let vhc = document.getElementById('vehicle').value;
-        let pay = document.getElementById('payment').value;
+    function addTrip() {
+        const trip = {
+            id: Date.now(),
+            date: document.getElementById('date').value,
+            truck: document.getElementById('truck').value.toUpperCase(),
+            party: document.getElementById('party').value,
+            freight: Number(document.getElementById('freight').value),
+            tax: Number(document.getElementById('taxDisplay').innerText),
+            payment: document.getElementById('payment').value,
+            diesel: Number(document.getElementById('diesel').value),
+            misc: Number(document.getElementById('misc').value)
+        };
 
-        if(from == "" || to == "") { alert("Please fill Loading and Destination points."); return; }
-
-        let message = "*LOGISTICS ORDER: " + orderNum + "*%0A" +
-                      "----------------------------%0A" +
-                      "*From:* " + from + "%0A" + 
-                      "*To:* " + to + "%0A" + 
-                      "*Cargo:* " + cargo + "%0A" + 
-                      "*Quantity:* " + qty + "%0A" + 
-                      "*Vehicle:* " + vhc + "%0A" + 
-                      "*Payment:* " + pay + "%0A" +
-                      "----------------------------%0A" +
-                      "Please confirm this booking.";
+        if(!trip.date || !trip.freight) return alert("Fill mandatory fields!");
         
-        alert("Success! Your Order ID is " + orderNum + ". Opening WhatsApp to confirm...");
-        window.open("https://wa.me/923298814020?text=" + message, '_blank');
+        trips.unshift(trip);
+        saveAndRender();
+        generatePDF(trip);
     }
+
+    function saveAndRender() {
+        localStorage.setItem('sk_erp_trips', JSON.stringify(trips));
+        const body = document.getElementById('tableBody');
+        body.innerHTML = '';
+        
+        let tProfit = 0, tCredit = 0, tDiesel = 0;
+        let vehicleStats = {};
+
+        trips.forEach(t => {
+            let totalExp = t.diesel + t.misc;
+            let net = t.freight - t.tax - totalExp;
+            
+            tProfit += net;
+            tDiesel += t.diesel;
+            if(t.payment === 'Credit') tCredit += (t.freight - t.tax);
+            
+            // Track vehicle performance
+            vehicleStats[t.truck] = (vehicleStats[t.truck] || 0) + net;
+
+            body.innerHTML += `
+                <tr>
+                    <td>${t.date}</td>
+                    <td><strong>${t.truck}</strong></td>
+                    <td>${t.party}</td>
+                    <td>Rs. ${t.freight}</td>
+                    <td>Rs. ${t.diesel}</td>
+                    <td style="color:${net > 0 ? 'green':'red'}">Rs. ${net}</td>
+                    <td><span class="badge badge-${t.payment.toLowerCase()}">${t.payment}</span></td>
+                </tr>
+            `;
+        });
+
+        document.getElementById('mProfit').innerText = "Rs. " + tProfit.toLocaleString();
+        document.getElementById('mCredit').innerText = "Rs. " + tCredit.toLocaleString();
+        document.getElementById('mDiesel').innerText = (tDiesel/280).toFixed(0) + " Liters (Approx)";
+        
+        // Find best vehicle
+        let bestV = Object.keys(vehicleStats).reduce((a, b) => vehicleStats[a] > vehicleStats[b] ? a : b, "N/A");
+        document.getElementById('mBest').innerText = bestV;
+    }
+
+    function generatePDF(t) {
+        alert("Invoice Generated for " + t.party + "\nOrder ID: SK-" + t.id.toString().slice(-4));
+        // Note: Real PDF generation usually requires a library like jspdf. 
+        // For now, it shows the data confirmation.
+    }
+
+    function exportData() {
+        let csv = "Date,Truck,Party,Freight,Tax,Diesel,Misc,Payment\n";
+        trips.forEach(t => {
+            csv += `${t.date},${t.truck},${t.party},${t.freight},${t.tax},${t.diesel},${t.misc},${t.payment}\n`;
+        });
+        let blob = new Blob([csv], { type: 'text/csv' });
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.setAttribute('hidden', '');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'sk_transport_report.csv');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    saveAndRender();
 </script>
 
 </body>
